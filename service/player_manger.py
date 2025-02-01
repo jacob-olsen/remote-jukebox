@@ -9,8 +9,8 @@ class Player:
         self.__songId = 0
         self.__media = None
 
-        #self.__event_manager = self.__player.event_manager()
-        #self.__event_manager.event_attach(vlc.EventType.MediaPlayerEndReached, self.__done_event_triger)
+        self.__event_manager = self.__player.event_manager()
+        self.__event_manager.event_attach(vlc.EventType.MediaPlayerEndReached, self.__done_event_triger)
 
         
 
@@ -77,6 +77,6 @@ class Player:
     def done_event_add(self, listener):
         self.__doneEventList.append(listener)
 
-    def __done_event_triger(self):
+    def __done_event_triger(self,event):
         for func in self.__doneEventList:
             func()
