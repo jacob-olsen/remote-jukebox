@@ -1,5 +1,5 @@
 class Songs:
-    def findSong(self, id):
+    def findSongPath(self, id):
         if id == 1:
             return "/home/jacob/Music/Blacksmith, Blacksmith.opus"
         elif id == 2:
