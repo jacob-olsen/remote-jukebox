@@ -1,4 +1,4 @@
-import vlc
+import vlc #https://python-vlc.readthedocs.io/en/latest/api/vlc/MediaPlayer.html#
 
 class Player:
     def __init__(self):
