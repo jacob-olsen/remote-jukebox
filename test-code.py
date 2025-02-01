@@ -1,6 +1,7 @@
 import vlc #https://python-vlc.readthedocs.io/en/latest/api/vlc/MediaPlayer.html#
 import time
 player = vlc.MediaPlayer('file:///home/jacob/Music/Blacksmith, Blacksmith.opus')
+print(type(player))
 player.play()
 
 def on_media_end(event):
