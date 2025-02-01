@@ -1,22 +1,19 @@
 import player_manger
 import stroge_manger
 
-class Mager:
-    def __init__(self):
-        pass
+
 
 #testing
+songs = stroge_manger.Songs()
 new = player_manger.Player()
-new.setSong("/home/jacob/Music/Blacksmith, Blacksmith.opus",0)
-new.play()
 
-print(new.status())
-input()
-new.pause()
-print(new.status())
-input()
-new.play()
 
 while True:
     print(new.status())
-    input()
+    cm = input()
+    if cm.isnumeric():
+        new.setSong(songs.findSong(int(cm)),int(cm))
+    if cm == "s":
+        new.pause()
+    if cm == "p":
+        new.play()

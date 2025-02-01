@@ -9,8 +9,8 @@ class Player:
         self.__songId = 0
         self.__media = None
 
-        self.__event_manager = self.__player.event_manager()
-        self.__event_manager.event_attach(vlc.EventType.MediaPlayerEndReached, self.__done_event_triger)
+        #self.__event_manager = self.__player.event_manager()
+        #self.__event_manager.event_attach(vlc.EventType.MediaPlayerEndReached, self.__done_event_triger)
 
         
 
