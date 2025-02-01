@@ -18,11 +18,18 @@ class Player:
         return f"{self.__player.get_time()}-{self.__player.get_length()}:ms {int(self.__player.get_position()*100)}%"
 
     def setSong(self, filepath, songId):
-        self.__songId = songId
-        self.__player.stop()
-        self.__media = self.__instance.media_new(filepath)
-        self.__player.set_media(self.__media)
-        self.play()
+        if self.__songId == songId:
+            self.__player.stop()
+            self.__player.set_time(0)
+            self.__player.play()
+            self.__status_event_triger()
+        else:
+            self.__songId = songId
+            self.__player.stop()
+            self.__media = self.__instance.media_new(filepath)
+            self.__player.set_media(self.__media)
+            self.__player.play()
+            self.__status_event_triger()
 
     def play(self):
         self.__player.play()
