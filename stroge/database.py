@@ -12,11 +12,33 @@ class MetaStroge:
         cur.execute("CREATE TABLE IF NOT EXISTS playlist(ID INTEGER,name TEXT, PRIMARY KEY(Id));")#playlist
         cur.close()
     
-    def add_song(self, name, path):
+    def addSong(self, name, path):
         cur = self.__con.cursor()
         cur.execute("INSERT INTO song (name, path) VALUES(?, ?);",(name, path))
+        Id = cur.lastrowid
         self.__con.commit()
         cur.close()
+        return Id
+    def getSongPath(self, ID):
+        cur = self.__con.cursor()
+        cur.execute("SELECT path FROM song WHERE ID = ?;",(ID,))
+        data = cur.fetchone()
+        cur.close()
+        return data[0]
+    def getSongs(self,page,size):
+        cur = self.__con.cursor()
+        cur.execute("SELECT path FROM song LIMIT ? OFFSET ?;",(size,int(page*size)))
+        data = cur.fetchall()
+        cur.close()
+        return data
+    def getSongCount(self) -> int:
+        cur = self.__con.cursor()
+        cur.execute("SELECT COUNT(*) FROM song;")
+        data = cur.fetchone()
+        cur.close()
+        return data[0]
+
 
 temp = MetaStroge()
-temp.add_song("test1","test2")
+print(temp.getSongPath(1))
+print(temp.getSongCount())
