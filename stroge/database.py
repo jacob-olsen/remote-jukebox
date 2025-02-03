@@ -7,9 +7,14 @@ class MetaStroge:
         #make tabels if needet
         cur = self.__con.cursor()
         cur.execute("CREATE TABLE IF NOT EXISTS song(ID INTEGER,name TEXT, path TEXT, PRIMARY KEY(Id));")#song
+
         cur.execute("CREATE TABLE IF NOT EXISTS album(ID INTEGER,name TEXT, PRIMARY KEY(Id));")#album
-        cur.execute("CREATE TABLE IF NOT EXISTS auther(ID INTEGER,name TEXT, PRIMARY KEY(Id));")#auther
+        cur.execute("CREATE TABLE IF NOT EXISTS albumEntry(ID INTEGER, albumID INTEGER, songID INTEGER, PRIMARY KEY(Id), FOREIGN KEY(albumID) REFERENCES album(ID), FOREIGN KEY(songID) REFERENCES song(ID));")#albumEntry
+        
         cur.execute("CREATE TABLE IF NOT EXISTS playlist(ID INTEGER,name TEXT, PRIMARY KEY(Id));")#playlist
+        cur.execute("CREATE TABLE IF NOT EXISTS playlistEntry(ID INTEGER,slot INTEGER,playlistID INTEGER, songID INTEGER, PRIMARY KEY(Id), FOREIGN KEY(playlistID) REFERENCES playlist(ID), FOREIGN KEY(songID) REFERENCES song(ID));")#playlist entry
+        
+        cur.execute("CREATE TABLE IF NOT EXISTS auther(ID INTEGER,name TEXT, PRIMARY KEY(Id));")#auther
         cur.close()
     
     def addSong(self, name, path):
