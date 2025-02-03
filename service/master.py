@@ -9,7 +9,7 @@ class Manger:
         self.__songs = stroge_manger.Songs()
         self.__player = player_manger.Player()
 
-        self.__playList = [1,2]
+        self.__playList = [2,3,1]
         self.__playListPos = 0
         self.__loop = 0 # 0=playList 1=loopList 2=loopSong
 
@@ -17,6 +17,17 @@ class Manger:
         threading.Thread(target=self.__songDone, daemon=True).start()
 
         self.__player.done_event_add(self.__songDoneEvent)
+        self.__player.status_event_add(self.__updateUi)#temp
+
+    def setSong(self, ID):
+        self.__player.setSong(self.__songs.findSongPath(ID),ID)
+
+    def play(self):
+        data = self.__player.status()
+        if data["ID"]:
+            self.__player.play()
+        else:
+            self.setSong(self.__playList[self.__playListPos])
 
     def __songDoneEvent(self):
         with self.__condition:
@@ -41,16 +52,14 @@ class Manger:
                         self.__playListPos = 0
                         print(f"start playlist-index:{self.__playListPos} song-id:{self.__playList[self.__playListPos]}")
                         self.setSong(self.__playList[self.__playListPos])
+    
+    def __updateUi(self):
+        data = self.__player.status()
+        print(data)
 
-
-        
-    def setSong(self, ID):
-        self.__player.setSong(self.__songs.findSongPath(ID),ID)
 
 
 master = Manger()
-
-master.setSong(1)
-input()
-master.setSong(3)
-input()
+while True:
+    master.play()
+    input()

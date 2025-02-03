@@ -1,4 +1,5 @@
 import vlc #https://python-vlc.readthedocs.io/en/latest/api/vlc/MediaPlayer.html#
+import time
 
 class Player:
     def __init__(self):
@@ -53,12 +54,14 @@ class Player:
         self.__status_event_triger()
 
     def set(self, pos):
+        self.__player.stop()
         if pos < 0:
             pos = 0
         elif pos >= self.__player.get_length():
-            self.__player.stop()
-            self.__done_event_triger()
+            self.__done_event_triger(None)
         self.__player.set_time(pos)
+        self.__player.play()
+        self.__status_event_triger()
 
     def status(self):
         return {"ID":self.__songId,
@@ -71,6 +74,7 @@ class Player:
         self.__updateEventList.append(listener)
 
     def __status_event_triger(self):
+        time.sleep(0.2)
         for func in self.__updateEventList:
             func()
     
