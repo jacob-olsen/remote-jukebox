@@ -1,15 +1,15 @@
-import player_manger
-import stroge_manger
+import service.player_manger
+import service.stroge_manger
 import time
 
 import threading
 
 class Manger:
     def __init__(self):
-        self.__songs = stroge_manger.Songs()
-        self.__player = player_manger.Player()
+        self.__songs = service.stroge_manger.Songs()
+        self.__player = service.player_manger.Player()
 
-        self.__playList = [2,3,1]
+        self.__playList = [1,]
         self.__playListPos = 0
         self.__loop = 0 # 0=playList 1=loopList 2=loopSong
 
@@ -28,6 +28,12 @@ class Manger:
             self.__player.play()
         else:
             self.setSong(self.__playList[self.__playListPos])
+    
+    def pause(self):
+        self.__player.pause()
+    
+    def skip(self, offset):
+        self.__player.skip(offset)
 
     def __songDoneEvent(self):
         with self.__condition:
@@ -43,7 +49,7 @@ class Manger:
                     self.__player.set(0)
                     self.__player.play()
                 else:
-                    if self.__playListPos < len(self.__playList):
+                    if self.__playListPos < len(self.__playList)-1:
                         self.__playListPos += 1
                         print(f"start playlist-index:{self.__playListPos} song-id:{self.__playList[self.__playListPos]}")
                         self.setSong(self.__playList[self.__playListPos])
@@ -56,10 +62,3 @@ class Manger:
     def __updateUi(self):
         data = self.__player.status()
         print(data)
-
-
-
-master = Manger()
-while True:
-    master.play()
-    input()
