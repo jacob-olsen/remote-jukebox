@@ -42,25 +42,25 @@ class Player:
 
     def skip(self, offset):
         pos = self.__player.get_time() + offset
-        self.__player.stop()
+        legth = self.__player.get_length()
+        self.__player.set_pause(1)
         if pos < 0:
             pos = 0
-        elif pos >= self.__player.get_length():
-            self.__player.stop()
-            self.__done_event_triger()
+        elif pos >= legth:
+            self.__done_event_triger(None)
             return
         self.__player.set_time(pos)
-        self.__player.play()
+        self.__player.set_pause(0)
         self.__status_event_triger()
 
     def set(self, pos):
-        self.__player.stop()
+        self.__player.set_pause(1)
         if pos < 0:
             pos = 0
         elif pos >= self.__player.get_length():
             self.__done_event_triger(None)
         self.__player.set_time(pos)
-        self.__player.play()
+        self.__player.set_pause(0)
         self.__status_event_triger()
 
     def status(self):
