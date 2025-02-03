@@ -19,6 +19,8 @@ class Manger:
         self.__player.done_event_add(self.__songDoneEvent)
         self.__player.status_event_add(self.__updateUi)#temp
 
+        self.__uiUpdateList = []
+
     def setSong(self, ID):
         self.__player.setSong(self.__songs.findSongPath(ID),ID)
 
@@ -59,6 +61,10 @@ class Manger:
                         print(f"start playlist-index:{self.__playListPos} song-id:{self.__playList[self.__playListPos]}")
                         self.setSong(self.__playList[self.__playListPos])
     
+    def addUiUpdateList(self, func):
+        self.__uiUpdateList.append(func)
+    
     def __updateUi(self):
         data = self.__player.status()
-        print(data)
+        for func in self.__uiUpdateList:
+            func(data)

@@ -7,6 +7,8 @@ in pkgs.mkShell {
       # select Python packages here
       flask
       python-vlc
+      flask-socketio
+      eventlet
     ]))
     pkgs.vlc
     pkgs.uv
