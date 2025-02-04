@@ -1,11 +1,12 @@
 import service.player_manger
 import service.stroge_manger
-import time
+import os
 
 import threading
 
 class Manger:
     def __init__(self):
+        self.__makeFolders()
         self.__songs = service.stroge_manger.Songs()
         self.__player = service.player_manger.Player()
 
@@ -94,3 +95,8 @@ class Manger:
         data = self.status()
         for func in self.__uiUpdateList:
             func(data)
+
+    def __makeFolders(self):
+        os.mkdir("temp")
+        os.mkdir("temp/upload")
+        os.mkdir("songs")
