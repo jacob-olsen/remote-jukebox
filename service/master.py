@@ -81,8 +81,16 @@ class Manger:
     def addUiUpdateList(self, func):
         self.__uiUpdateList.append(func)
     
-    def __updateUi(self):
+    def playTime(self):
+        data = self.__player.status()
+        return {"play_time":data["play_time"],"length":data["length"],"position":data["position"]}
+
+    def status(self):
         data = self.__player.status()
         data["playList"] = self.__playList
+        return data
+
+    def __updateUi(self):
+        data = self.status()
         for func in self.__uiUpdateList:
             func(data)

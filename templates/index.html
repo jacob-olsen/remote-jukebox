@@ -8,8 +8,7 @@
 <body>
     
     
-    <button id="playButten" onclick="play(true)">></button>
-    <button onclick="play(false)">||</button>
+    <button id="playButten" onclick='play(!uiData["playing"])'>></button>
 
     <button onclick="addToList(1)">add 1</button>
     <button onclick="addToList(2)">add 2</button>
@@ -20,15 +19,25 @@
     <script type="text/javascript" charset="utf-8">
         var socket = io();
         var uiData = {}
+        var timeSync = 0
+
         //evenst
         socket.on('connect', function() {
             console.log("connet to ws server")
-            socket.emit('hi', {data: 'I\'m connected!'});
-        });
-        socket.on('message', function(mgs) {
-            data = JSON.parse(mgs)
+            data = socket.emit('hi', {data: 'I\'m connected!'});
             console.log(data)
-            playButon(data["playing"])
+        });
+
+        socket.on('message', function(mgs) {
+            if (typeof mgs == "object"){
+                data = mgs
+            }else{
+                data = JSON.parse(mgs)
+            }
+            
+            console.log(data)
+            if (data["playing"] != undefined)
+                playButon(data["playing"])
         });
         //controlse
         function play(state){
@@ -37,18 +46,24 @@
         function addToList(songID){
             socket.emit("addSongToList", {songID: songID})
         }
+        function requstPos(){
+            socket.emit("playTime", {data: 'I\'m connected!'})
+        }
         //ui Update
         function playButon(state){
             if (uiData["playing"] != state){
                 uiData["playing"] = state
                 taget = document.getElementById("playButten")
-                if (state == 0){
-                    taget.innerHTML = ">"
-                }else{
+                if (state){
                     taget.innerHTML = "||"
+                    timeSync = setInterval(requstPos,1000)
+                }else{
+                    taget.innerHTML = ">"
+                    clearInterval(timeSync)
                 }
             }
         }
+
 
     </script>
 </body>

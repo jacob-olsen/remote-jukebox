@@ -24,12 +24,20 @@ def hello_world():
 @socketio.on('hi')
 def handle_message(data):
     print(data)
+    return manger.status()
+
+@socketio.on('playTime')
+def handle_message(data):
+    socketio.emit("message",manger.playTime())
 
 @socketio.on('play')
 def sockePlay(data):
+    print(type(data["data"]))
     if data["data"]:
+        print("play")
         manger.play()
     else:
+        print("pause")
         manger.pause()
 
 @socketio.on('addSongToList')
