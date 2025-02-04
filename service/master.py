@@ -9,7 +9,7 @@ class Manger:
         self.__songs = service.stroge_manger.Songs()
         self.__player = service.player_manger.Player()
 
-        self.__playList = [1,]
+        self.__playList = []
         self.__playListPos = 0
         self.__loop = 0 # 0=playList 1=loopList 2=loopSong
 
@@ -21,6 +21,20 @@ class Manger:
 
         self.__uiUpdateList = []
 
+    def addSongToList(self,ID: int):
+        if ID not in self.__playList:
+            self.__playList.append(ID)
+            self.__updateUi()
+    def rmSongfromList(self,ID: int):
+        if ID in self.__playList:
+            self.__playList.remove(ID)
+            if self.__playListPos >= len(self.__playList):
+                self.__playListPos = 0
+            self.__updateUi()
+    def getSongList(self):
+        return self.__playList
+    
+
     def setSong(self, ID):
         self.__player.setSong(self.__songs.findSongPath(ID),ID)
 
@@ -29,8 +43,11 @@ class Manger:
         if data["ID"]:
             self.__player.play()
         else:
-            self.setSong(self.__playList[self.__playListPos])
-    
+            if len(self.__playList) > 0:
+                if self.__playListPos >= len(self.__playList):
+                    self.__playListPos = len(self.__playList) - 1
+                self.setSong(self.__playList[self.__playListPos])
+
     def pause(self):
         self.__player.pause()
     
@@ -66,5 +83,6 @@ class Manger:
     
     def __updateUi(self):
         data = self.__player.status()
+        data["playList"] = self.__playList
         for func in self.__uiUpdateList:
             func(data)

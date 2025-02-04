@@ -12,7 +12,6 @@ class Player:
 
         self.__event_manager = self.__player.event_manager()
         self.__event_manager.event_attach(vlc.EventType.MediaPlayerEndReached, self.__done_event_triger)
-
         
 
     def __str__(self):
@@ -63,16 +62,15 @@ class Player:
         self.__player.set_pause(0)
         self.__status_event_triger()
 
-    def status(self):
+    def status(self) -> dict:
         return {"ID":self.__songId,
-                "playing": self.__player.is_playing(),
+                "playing": self.__player.is_playing() == 1,
                 "play_time":self.__player.get_time(),
                 "length":self.__player.get_length(),
                 "position":int(self.__player.get_position()*100)}
     
     def status_event_add(self, listener):
         self.__updateEventList.append(listener)
-
     def __status_event_triger(self):
         time.sleep(0.2)
         for func in self.__updateEventList:
@@ -80,7 +78,6 @@ class Player:
     
     def done_event_add(self, listener):
         self.__doneEventList.append(listener)
-
     def __done_event_triger(self,event):
         for func in self.__doneEventList:
             func()

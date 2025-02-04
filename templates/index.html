@@ -6,22 +6,50 @@
     <title>Document</title>
 </head>
 <body>
-    <a href="/api/play">play</a>
-    <a href="/api/pause">stop</a>
-    <a href="/api/skipforward">+30</a>
-    <a href="/api/skipbackward">-30</a>
+    
+    
+    <button id="playButten" onclick="play(true)">></button>
+    <button onclick="play(false)">||</button>
+
+    <button onclick="addToList(1)">add 1</button>
+    <button onclick="addToList(2)">add 2</button>
+    <button onclick="addToList(3)">add 3</button>
 
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.0.1/socket.io.js" integrity="sha512-q/dWJ3kcmjBLU4Qc47E4A9kTB4m3wuTY7vkFJDTZKjTs8jhyGQnaUrxa0Ytd0ssMZhbNua9hE+E7Qv1j+DyZwA==" crossorigin="anonymous"></script>
     <script type="text/javascript" charset="utf-8">
         var socket = io();
+        var uiData = {}
+        //evenst
         socket.on('connect', function() {
-            console.log("test")
+            console.log("connet to ws server")
             socket.emit('hi', {data: 'I\'m connected!'});
         });
         socket.on('message', function(mgs) {
-            console.log(mgs)
+            data = JSON.parse(mgs)
+            console.log(data)
+            playButon(data["playing"])
         });
+        //controlse
+        function play(state){
+            socket.emit("play", {data: state})
+        }
+        function addToList(songID){
+            socket.emit("addSongToList", {songID: songID})
+        }
+        //ui Update
+        function playButon(state){
+            if (uiData["playing"] != state){
+                uiData["playing"] = state
+                taget = document.getElementById("playButten")
+                if (state == 0){
+                    taget.innerHTML = ">"
+                }else{
+                    taget.innerHTML = "||"
+                }
+            }
+        }
+
     </script>
 </body>
 </html>

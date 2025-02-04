@@ -1,5 +1,6 @@
 from flask import Flask, render_template, request, url_for, redirect
 from flask_socketio import SocketIO, send
+import json
 
 import service.master
 
@@ -9,15 +10,35 @@ manger = service.master.Manger()
 
 def updateUi(mgs):
     print(mgs)
-    socketio.send(data=str(mgs))
+    
+    socketio.send(data=json.dumps(mgs))
 manger.addUiUpdateList(updateUi)
 
 @app.route("/")
 def hello_world():
     return render_template("index.html")
     
+
+    
+#socket
+@socketio.on('hi')
+def handle_message(data):
+    print(data)
+
+@socketio.on('play')
+def sockePlay(data):
+    if data["data"]:
+        manger.play()
+    else:
+        manger.pause()
+
+@socketio.on('addSongToList')
+def addSongToList(data):
+    manger.addSongToList(data["songID"])
+
+#api
 @app.route("/api/play")
-def play():
+def apiPlay():
     manger.play()
     return "ok"
 
@@ -35,10 +56,6 @@ def skipForward():
 def skipBackward():
     manger.skip(-30000)
     return "ok"
-
-@socketio.on('hi')
-def handle_message(data):
-    print(data)
 
 if __name__=='__main__':
     socketio.run(app)
