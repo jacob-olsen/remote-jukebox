@@ -24,6 +24,28 @@ function UpdateSongPage(){
         list = document.getElementById("songList")
         list.innerHTML = ""
 
+        pageTurn = '<div class="row">'
+        pageTurn += '<div class="col">'
+        pageTurn += '</div>'
+        if (pageCount > 0){
+            pageTurn += '<div class="col-1">'
+            pageTurn += '<button>back</button>'
+            pageTurn += '</div>'
+        }
+        pageTurn += '<div class="col-auto">'
+        pageTurn += '<p>' + pageCount + '</p>'
+        pageTurn += '</div>'
+        if (pageCount < Math.round(songCount/pageSize)){
+            pageTurn += '<div class="col-1">'
+            pageTurn += '<button>next</button>'
+            pageTurn += '</div>'
+        }
+        pageTurn += '<div class="col">'
+        pageTurn += '</div>'
+        pageTurn += '</div>'
+
+        list.innerHTML += pageTurn
+        
         data.forEach(element => {
             htmlInfo = '<div class="row" id="' + element["ID"] +'">'
             htmlInfo += '<p>'+element["name"]+'</p>'
