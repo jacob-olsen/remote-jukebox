@@ -39,6 +39,7 @@ def upload_file():
         if file and allowed_file(file.filename):
             filename = secure_filename(file.filename)
             file.save(os.path.join(UPLOAD_FOLDER, filename))
+            print(manger.saveSong(filename, os.path.join(UPLOAD_FOLDER, filename)))
             return redirect("/")
     
 #func

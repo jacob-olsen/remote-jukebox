@@ -42,8 +42,3 @@ class MetaStroge:
         data = cur.fetchone()
         cur.close()
         return data[0]
-
-
-temp = MetaStroge()
-print(temp.getSongPath(1))
-print(temp.getSongCount())

@@ -1,5 +1,6 @@
 import service.player_manger
 import service.stroge_manger
+import hashlib
 import os
 
 import threading
@@ -7,6 +8,8 @@ import threading
 class Manger:
     def __init__(self):
         self.__makeFolders()
+        self.__clearTemp()
+
         self.__songs = service.stroge_manger.Songs()
         self.__player = service.player_manger.Player()
 
@@ -54,6 +57,35 @@ class Manger:
     
     def skip(self, offset):
         self.__player.skip(offset)
+    
+    def addUiUpdateList(self, func):
+        self.__uiUpdateList.append(func)
+    
+    def playTime(self):
+        data = self.__player.status()
+        return {"play_time":data["play_time"],"length":data["length"],"position":data["position"]}
+
+    def status(self):
+        data = self.__player.status()
+        data["playList"] = self.__playList
+        return data
+
+    def saveSong(self, songName, songPath):
+        if not os.path.isfile(songPath):
+            return "upload faild"
+        hashSum = hashlib.md5(open(songPath,"rb").read()).hexdigest()
+
+        if os.path.isfile(os.path.join("songs", f"{hashSum}.{songName.rsplit('.', 1)[1].lower()}")):
+            return "song alrday exist"
+        
+        os.rename(songPath, os.path.join("songs", f"{hashSum}.{songName.rsplit('.', 1)[1].lower()}"))
+        self.__songs.addSong(songName.rsplit('.', 1)[0], os.path.join("songs", f"{hashSum}.{songName.rsplit('.', 1)[1].lower()}"))
+        return True
+
+    def __updateUi(self):
+        data = self.status()
+        for func in self.__uiUpdateList:
+            func(data)
 
     def __songDoneEvent(self):
         with self.__condition:
@@ -78,25 +110,15 @@ class Manger:
                         self.__playListPos = 0
                         print(f"start playlist-index:{self.__playListPos} song-id:{self.__playList[self.__playListPos]}")
                         self.setSong(self.__playList[self.__playListPos])
-    
-    def addUiUpdateList(self, func):
-        self.__uiUpdateList.append(func)
-    
-    def playTime(self):
-        data = self.__player.status()
-        return {"play_time":data["play_time"],"length":data["length"],"position":data["position"]}
 
-    def status(self):
-        data = self.__player.status()
-        data["playList"] = self.__playList
-        return data
-
-    def __updateUi(self):
-        data = self.status()
-        for func in self.__uiUpdateList:
-            func(data)
-
+    def __clearTemp(self):
+        if os.path.isdir("temp/upload"):
+            for taget in os.listdir("temp/upload"):
+                os.remove(os.path.join("temp/upload",taget))
     def __makeFolders(self):
-        os.mkdir("temp")
-        os.mkdir("temp/upload")
-        os.mkdir("songs")
+        self.__mkdir("temp")
+        self.__mkdir("temp/upload")
+        self.__mkdir("songs")
+    def __mkdir(self,folderPath):
+        if not os.path.isdir(folderPath):
+            os.mkdir(folderPath)
