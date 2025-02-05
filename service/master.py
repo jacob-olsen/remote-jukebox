@@ -82,6 +82,9 @@ class Manger:
         self.__songs.addSong(songName.rsplit('.', 1)[0], os.path.join("songs", f"{hashSum}.{songName.rsplit('.', 1)[1].lower()}"))
         return True
 
+    def getSongs(self, page, size):
+        return self.__songs.getSongs(page, size)
+
     def __updateUi(self):
         data = self.status()
         for func in self.__uiUpdateList:

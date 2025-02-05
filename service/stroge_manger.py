@@ -14,3 +14,6 @@ class Songs:
         
     def addSong(self, name, filePath):
         self.__sql.addSong(name, filePath)
+    
+    def getSongs(self, page, size):
+        return self.__sql.getSongs(page, size)

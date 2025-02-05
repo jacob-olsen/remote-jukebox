@@ -50,6 +50,7 @@ def allowed_file(filename):
 @socketio.on('hi')
 def handle_message(data):
     print(data)
+
     return manger.status()
 
 @socketio.on('playTime')
@@ -90,6 +91,17 @@ def skipForward():
 def skipBackward():
     manger.skip(-30000)
     return "ok"
+
+@app.route("/api/songs")
+def getSongs():
+    page = request.args.get('page', default="0")
+    size = request.args.get('size', default="10")
+    if page.isdigit() and size.isdigit():
+        data = manger.getSongs(int(page),int(size))
+        return json.dumps(data)
+    return "False"
+    
+
 
 if __name__=='__main__':
     socketio.run(app)
