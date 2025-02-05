@@ -32,7 +32,7 @@ class MetaStroge:
         return data[0]
     def getSongs(self,page,size):
         cur = self.__con.cursor()
-        cur.execute("SELECT * FROM song LIMIT ? OFFSET ?;",(size,int(page*size)))
+        cur.execute("SELECT ID, name FROM song LIMIT ? OFFSET ?;",(size,int(page*size)))
         data = cur.fetchall()
         cur.close()
         return data

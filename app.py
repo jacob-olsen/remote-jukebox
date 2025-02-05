@@ -99,7 +99,7 @@ def getSongs():
     if page.isdigit() and size.isdigit():
         data = manger.getSongs(int(page),int(size))
         return json.dumps(data)
-    return "False"
+    return "{}"
     
 
 
