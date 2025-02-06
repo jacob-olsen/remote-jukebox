@@ -37,6 +37,9 @@ function addToList(songID) {
 function rmFromList(songID) {
     socket.emit("rmSongFromList", { songID: songID })
 }
+function songMoveList(ID,moveBy){
+    socket.emit("songMoveList", { songID: ID, move: moveBy })
+}
 function requstPos() {
     socket.emit("playTime", { data: 'I\'m connected!' })
 }
@@ -65,12 +68,24 @@ function updatePlayList(playList){
     list.innerHTML = ""
 
     playList["list"].forEach(element => {
-        htmlInfo = '<div class="row" id="playList' + element["ID"] +'">'
+        htmlInfo = '<div class="row border border-primary" id="playList' + element["ID"] +'">'
+        htmlInfo += '<div class="col">'
         htmlInfo += '<p>'+element["name"]+'</p>'
         if (element["ID"] == playList["plaingID"]){
             htmlInfo += '<p>plaing</p>'
         }
+        htmlInfo += '</div>'
+        htmlInfo += '<div class="col-auto">'
+        htmlInfo += '<div class="row">'
+        htmlInfo += '<button onclick="songMoveList(' + element["ID"] + ',-1)">up</button>'
+        htmlInfo += '</div>'
+        htmlInfo += '<div class="row">'
         htmlInfo += '<button onclick="rmFromList(' + element["ID"] + ')">remove</button>'
+        htmlInfo += '</div>'
+        htmlInfo += '<div class="row">'
+        htmlInfo += '<button onclick="songMoveList(' + element["ID"] + ',1)">down</button>'
+        htmlInfo += '</div>'
+        htmlInfo += '</div>'
         htmlInfo += '</div>'
         list.innerHTML += htmlInfo
     });

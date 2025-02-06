@@ -35,6 +35,17 @@ class Manger:
             if self.__playListPos >= len(self.__playList):
                 self.__playListPos = 0
             self.__updateUi()
+    def songMoveList(self,ID,move):
+        findPos = self.__playList.index(ID)
+        newPos = findPos + move
+        if newPos < 0:
+            return
+        if newPos >= len(self.__playList):
+            return
+        oldID = self.__playList[newPos]
+        self.__playList[newPos] = ID
+        self.__playList[findPos] = oldID
+        self.__updateUi()
     def getSongList(self):
         return self.__playList
     
