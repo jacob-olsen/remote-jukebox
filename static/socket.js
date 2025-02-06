@@ -34,6 +34,9 @@ function play(state) {
 function addToList(songID) {
     socket.emit("addSongToList", { songID: songID })
 }
+function rmFromList(songID) {
+    socket.emit("rmSongFromList", { songID: songID })
+}
 function requstPos() {
     socket.emit("playTime", { data: 'I\'m connected!' })
 }
@@ -67,7 +70,7 @@ function updatePlayList(playList){
         if (element["ID"] == playList["plaingID"]){
             htmlInfo += '<p>plaing</p>'
         }
-        htmlInfo += '<button onclick="addToList(' + element["ID"] + ')">add to list</button>'
+        htmlInfo += '<button onclick="rmFromList(' + element["ID"] + ')">remove</button>'
         htmlInfo += '</div>'
         list.innerHTML += htmlInfo
     });

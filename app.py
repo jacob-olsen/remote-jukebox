@@ -70,6 +70,10 @@ def sockePlay(data):
 @socketio.on('addSongToList')
 def addSongToList(data):
     manger.addSongToList(data["songID"])
+@socketio.on('rmSongFromList')
+def addSongToList(data):
+    print("rm",data)
+    manger.rmSongfromList(data["songID"])
 
 @socketio.on('forWard')
 def skipTime(data):
