@@ -71,6 +71,10 @@ def sockePlay(data):
 def addSongToList(data):
     manger.addSongToList(data["songID"])
 
+@socketio.on('forWard')
+def skipTime(data):
+    manger.skip(int(data["time"])*1000)
+
 #api
 @app.route("/api/play")
 def apiPlay():

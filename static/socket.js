@@ -34,6 +34,9 @@ function addToList(songID) {
 function requstPos() {
     socket.emit("playTime", { data: 'I\'m connected!' })
 }
+function forWard(time){
+    socket.emit("forWard", { time: time })
+}
 //ui Update
 function playButon(state) {
     if (uiData["playing"] != state) {

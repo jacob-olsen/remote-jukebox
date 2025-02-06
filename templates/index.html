@@ -23,9 +23,20 @@
                                 <p id="posText">0%</p>
                             </div>
                         </div>
+                        <div class="row">
+                            <div class="col">
+                                <button onclick='forWard(-30)'><<</button>
+                            </div>
+                            <div class="col">
+                                <button id="playButten" onclick='play(!uiData["playing"])'>></button>
+                            </div>
+                            <div class="col">
+                                <button onclick='forWard(30)'>>></button>
+                            </div>
+                        </div>
                     </div>
-                    <button id="playButten" onclick='play(!uiData["playing"])'>></button>
                 </div>
+                
                 <div class="row">
                     <div id="playList" class="col">
                         <p>loading</p>
