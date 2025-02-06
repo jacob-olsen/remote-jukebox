@@ -21,6 +21,8 @@ socket.on('message', function (mgs) {
         playButon(data["playing"])
     if (data["playList"] != undefined)
         updatePlayList(data["playList"])
+    if (data["position"] != undefined)
+        updateProgras(data["position"])
 });
 //controlse
 function play(state) {
@@ -62,4 +64,8 @@ function updatePlayList(playList){
     });
 
     console.log(playList)
+}
+function updateProgras(pos){
+    document.getElementById("posText").innerHTML = pos + "%"
+
 }

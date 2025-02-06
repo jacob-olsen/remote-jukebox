@@ -2,7 +2,7 @@ import sqlite3
 #"CREATE TABLE IF NOT EXISTS Config(Id INTEGER,Name TEXT, Value TEXT, PRIMARY KEY(Id));"
 class MetaStroge:
     def __init__(self):
-        self.__con = sqlite3.connect("info.sqlite")
+        self.__con = sqlite3.connect("info.sqlite", check_same_thread=False)
 
         #make tabels if needet
         cur = self.__con.cursor()
