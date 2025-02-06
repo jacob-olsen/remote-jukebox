@@ -17,14 +17,6 @@
                     <div class="col">
                         <div class="row">
                             <div class="col">
-                                
-                            </div>
-                            <div class="col-1">
-                                <p id="posText">0%</p>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col">
                                 <button onclick='forWard(-30)'><<</button>
                             </div>
                             <div class="col">
@@ -34,9 +26,21 @@
                                 <button onclick='forWard(30)'>>></button>
                             </div>
                         </div>
+                        <div class="row">
+                            <div class="col">
+                                <input id="posBar" onchange="jumpTo()" type="range" value="0" style="width: 100%;"/>
+                            </div>
+                            <div class="col-auto">
+                                <div class="row">
+                                    <p id="posText">0%</p>
+                                </div>
+                                <div class="row">
+                                    <p id="timeText">0:0-0:0</p>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
-                
                 <div class="row">
                     <div id="playList" class="col">
                         <p>loading</p>

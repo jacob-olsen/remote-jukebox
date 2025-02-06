@@ -64,6 +64,13 @@ class Manger:
     def skip(self, offset):
         self.__player.skip(offset)
     
+    def setTime(self,time):
+        data = self.__player.status()
+        self.__player.set(int(data["length"]*(time/100)))
+        self.__updateUi()
+
+
+
     def addUiUpdateList(self, func):
         self.__uiUpdateList.append(func)
     

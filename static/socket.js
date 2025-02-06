@@ -23,6 +23,9 @@ socket.on('message', function (mgs) {
         updatePlayList(data["playList"])
     if (data["position"] != undefined)
         updateProgras(data["position"])
+    if (data["play_time"] != undefined)
+        if (data["length"] != undefined)
+            updateTime(data["play_time"],data["length"])
 });
 //controlse
 function play(state) {
@@ -36,6 +39,9 @@ function requstPos() {
 }
 function forWard(time){
     socket.emit("forWard", { time: time })
+}
+function jumpTo(){
+    socket.emit("setTime", { time: document.getElementById("posBar").value})
 }
 //ui Update
 function playButon(state) {
@@ -73,5 +79,24 @@ function updateProgras(pos){
         pos = 0
     }
     document.getElementById("posText").innerHTML = pos + "%"
+    document.getElementById("posBar").value = pos
+}
+function updateTime(plaing,total){
+    if (plaing < 0)
+        plaing = 0
+    if (total < 0)
+        total = 0
 
+    nowSec = Math.floor(plaing / 1000)
+    nowMin = Math.floor(nowSec / 60)
+    nowSec = nowSec % 60
+    if (nowSec < 10)
+        nowSec = "0" + nowSec
+
+    totalSec = Math.floor(total / 1000)
+    totalMin = Math.floor(totalSec / 60)
+    totalSec = totalSec % 60
+    if (totalSec < 10)
+        totalSec = "0" + totalSec
+    document.getElementById("timeText").innerHTML = nowMin + ":" + nowSec + "-" + totalMin + ":" + totalSec
 }
