@@ -66,6 +66,9 @@ function updatePlayList(playList){
     console.log(playList)
 }
 function updateProgras(pos){
+    if (pos < 0){
+        pos = 0
+    }
     document.getElementById("posText").innerHTML = pos + "%"
 
 }
