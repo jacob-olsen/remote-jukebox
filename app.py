@@ -51,7 +51,7 @@ def allowed_file(filename):
 def handle_message(data):
     print(data)
 
-    return manger.status()
+    socketio.emit("message",manger.status())
 
 @socketio.on('playTime')
 def handle_message(data):
