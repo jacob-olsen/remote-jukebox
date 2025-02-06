@@ -19,6 +19,8 @@ socket.on('message', function (mgs) {
     console.log(data)
     if (data["playing"] != undefined)
         playButon(data["playing"])
+    if (data["playList"] != undefined)
+        updatePlayList(data["playList"])
 });
 //controlse
 function play(state) {
@@ -43,4 +45,21 @@ function playButon(state) {
             clearInterval(timeSync)
         }
     }
+}
+function updatePlayList(playList){
+    list = document.getElementById("playList")
+    list.innerHTML = ""
+
+    playList["list"].forEach(element => {
+        htmlInfo = '<div class="row" id="playList' + element["ID"] +'">'
+        htmlInfo += '<p>'+element["name"]+'</p>'
+        if (element["ID"] == playList["plaingID"]){
+            htmlInfo += '<p>plaing</p>'
+        }
+        htmlInfo += '<button onclick="addToList(' + element["ID"] + ')">add to list</button>'
+        htmlInfo += '</div>'
+        list.innerHTML += htmlInfo
+    });
+
+    console.log(playList)
 }

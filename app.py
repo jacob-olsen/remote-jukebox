@@ -101,7 +101,9 @@ def getSongs():
         return json.dumps(data)
     return "{}"
     
-
+@app.route("/api/playList")
+def getplayList():
+    return json.dumps(manger.getPlayList())
 
 if __name__=='__main__':
     socketio.run(app)

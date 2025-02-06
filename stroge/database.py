@@ -24,6 +24,12 @@ class MetaStroge:
         self.__con.commit()
         cur.close()
         return Id
+    def getSong(self, ID):
+        cur = self.__con.cursor()
+        cur.execute("SELECT * FROM song WHERE ID = ?;",(ID,))
+        data = cur.fetchone()
+        cur.close()
+        return data
     def getSongPath(self, ID):
         cur = self.__con.cursor()
         cur.execute("SELECT path FROM song WHERE ID = ?;",(ID,))

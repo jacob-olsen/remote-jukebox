@@ -38,6 +38,12 @@ class Manger:
     def getSongList(self):
         return self.__playList
     
+    def getPlayList(self):
+        data = []
+        for id in self.__playList:
+            info = self.__songs.getSong(id)
+            data.append({"ID":id,"name":info["name"]})
+        return data
 
     def setSong(self, ID):
         self.__player.setSong(self.__songs.findSongPath(ID),ID)
@@ -67,7 +73,12 @@ class Manger:
 
     def status(self):
         data = self.__player.status()
-        data["playList"] = self.__playList
+        data["playList"] = {}
+        data["playList"]["list"] = self.getPlayList()
+        if len(self.__playList) > self.__playListPos:
+            data["playList"]["plaingID"] = self.__playList[self.__playListPos]
+        else:
+            data["playList"]["plaingID"] = 0
         return data
 
     def saveSong(self, songName, songPath):

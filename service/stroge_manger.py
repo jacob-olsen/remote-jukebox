@@ -10,6 +10,10 @@ class Songs:
     def addSong(self, name, filePath):
         self.__sql.addSong(name, filePath)
     
+    def getSong(self, ID):
+        data = self.__sql.getSong(ID)
+        return {"ID":data[0], "name":data[1], "path":data[2]}
+
     def getSongs(self, page, size):
         data = []
         for temp in self.__sql.getSongs(page, size):
