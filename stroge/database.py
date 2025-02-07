@@ -24,6 +24,12 @@ class MetaStroge:
         self.__con.commit()
         cur.close()
         return Id
+    def setName(self, ID, name):
+        cur = self.__con.cursor()
+        cur.execute("UPDATE song SET name=? WHERE ID=?;",(name, ID))
+        Id = cur.lastrowid
+        self.__con.commit()
+        cur.close()
     def getSong(self, ID):
         cur = self.__con.cursor()
         cur.execute("SELECT * FROM song WHERE ID = ?;",(ID,))

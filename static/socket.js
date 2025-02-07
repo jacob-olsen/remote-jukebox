@@ -64,6 +64,14 @@ function jumpToSong(ID){
 function switchLoop(){
     socket.emit("switchLoop", {})
 }
+function updateName(ID,name){
+    newName=prompt("Please enter new name",name);
+    if (newName!=null){
+        socket.emit("updateName", {songID:ID,name:newName})
+        document.getElementById(ID + "name").innerHTML = newName
+        
+   }
+}
 //ui Update
 function playButon(state) {
     if (uiData["playing"] != state) {

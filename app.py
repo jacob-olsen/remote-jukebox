@@ -98,6 +98,10 @@ def setTime(data):
 def switchLoop(data):
     manger.switchLoop()
 
+@socketio.on('updateName')
+def updateName(data):
+    manger.updateName(int(data["songID"]),data["name"])
+
 #api
 @app.route("/api/play")
 def apiPlay():

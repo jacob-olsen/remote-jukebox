@@ -141,6 +141,8 @@ class Manger:
         os.rename(songPath, os.path.join("songs", f"{hashSum}.{songName.rsplit('.', 1)[1].lower()}"))
         self.__songs.addSong(songName.rsplit('.', 1)[0], os.path.join("songs", f"{hashSum}.{songName.rsplit('.', 1)[1].lower()}"))
         return True
+    def updateName(self,ID,name):
+        self.__songs.updateName(ID,name)
 
     def getSongs(self, page, size):
         return self.__songs.getSongs(page, size)

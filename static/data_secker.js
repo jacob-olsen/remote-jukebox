@@ -49,8 +49,19 @@ function UpdateSongPage(){
         
         data["songs"].forEach(element => {
             htmlInfo = '<div class="row" id="' + element["ID"] +'">'
-            htmlInfo += '<p>'+element["name"]+'</p>'
+            htmlInfo += '<div class="col">'
+            htmlInfo += '<div class="row">'
+            htmlInfo += '<div class="col">'
+            htmlInfo += '<p id="' + element["ID"] +'name">'+element["name"]+'</p>'
+            htmlInfo += '</div>'
+            htmlInfo += '<div class="col-auto">'
+            htmlInfo += '<button onclick="updateName('+ element["ID"] +', \'' + element["name"] + '\')">edit</button>'
+            htmlInfo += '</div>'
+            htmlInfo += '</div>'
+            htmlInfo += '<div class="row">'
             htmlInfo += '<button onclick="addToList(' + element["ID"] + ')">add to list</button>'
+            htmlInfo += '</div>'
+            htmlInfo += '</div>'
             htmlInfo += '</div>'
             list.innerHTML += htmlInfo
         });

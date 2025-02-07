@@ -9,6 +9,9 @@ class Songs:
         
     def addSong(self, name, filePath):
         self.__sql.addSong(name, filePath)
+
+    def updateName(self,ID,name):
+        self.__sql.setName(ID,name)
     
     def getSong(self, ID):
         data = self.__sql.getSong(ID)
