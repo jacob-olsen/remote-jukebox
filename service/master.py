@@ -112,6 +112,13 @@ class Manger:
         data = self.__player.status()
         return {"play_time":data["play_time"],"length":data["length"],"position":data["position"]}
 
+    def switchLoop(self):
+        self.__loop += 1
+        if self.__loop > 2:
+            self.__loop = 0
+        print(self.__loop)
+        self.__updateUi()
+
     def status(self):
         data = self.__player.status()
         data["playList"] = {}

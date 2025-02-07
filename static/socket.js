@@ -26,6 +26,8 @@ socket.on('message', function (mgs) {
     if (data["play_time"] != undefined)
         if (data["length"] != undefined)
             updateTime(data["play_time"],data["length"])
+    if (data["loop"] != undefined)
+        updateLoopButten(data["loop"])
 });
 //controlse
 function play(state) {
@@ -58,6 +60,9 @@ function jumpTo(){
 function jumpToSong(ID){
     socket.emit("jumpToSong", { songID: ID})
 
+}
+function switchLoop(){
+    socket.emit("switchLoop", {})
 }
 //ui Update
 function playButon(state) {
@@ -136,5 +141,12 @@ function updateTime(plaing,total){
 }
 
 function updateLoopButten(ver){
-
+    taget = document.getElementById("loopButton")
+    if (ver == 0){
+        taget.innerHTML = "no loop"
+    }else if(ver == 1){
+        taget.innerHTML = "loop list"
+    }else if(ver == 2){
+        taget.innerHTML = "loop song"
+    }
 }

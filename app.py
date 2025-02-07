@@ -94,6 +94,10 @@ def skipTime(data):
 def setTime(data):
     manger.setTime(int(data["time"]))
 
+@socketio.on('switchLoop')
+def switchLoop(data):
+    manger.switchLoop()
+
 #api
 @app.route("/api/play")
 def apiPlay():
