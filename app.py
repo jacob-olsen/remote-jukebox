@@ -114,7 +114,9 @@ def getSongs():
     page = request.args.get('page', default="0")
     size = request.args.get('size', default="10")
     if page.isdigit() and size.isdigit():
-        data = manger.getSongs(int(page),int(size))
+        data = {}
+        data["songs"] = manger.getSongs(int(page),int(size))
+        data["count"] = manger.getSongsCount()
         return json.dumps(data)
     return "{}"
     

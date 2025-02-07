@@ -122,6 +122,8 @@ class Manger:
 
     def getSongs(self, page, size):
         return self.__songs.getSongs(page, size)
+    def getSongsCount(self):
+        return self.__songs.getSongsCount()
 
     def __updateUi(self):
         data = self.status()

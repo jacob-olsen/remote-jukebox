@@ -19,3 +19,6 @@ class Songs:
         for temp in self.__sql.getSongs(page, size):
             data.append({"ID":temp[0],"name":temp[1]})
         return data
+    
+    def getSongsCount(self):
+        return self.__sql.getSongCount()

@@ -60,6 +60,22 @@
                     </form>
                 </div>
                 <div class="row">
+                    <div class="btn-group btn-group-toggle" data-toggle="buttons">
+                        <label class="btn btn-secondary active">
+                          <input type="radio" name="pageSixe" onclick="pageSize = 5; UpdateSongPage()" autocomplete="off" checked> 5 items per page
+                        </label>
+                        <label class="btn btn-secondary">
+                          <input type="radio" name="pageSixe" onclick="pageSize = 10; UpdateSongPage()" autocomplete="off"> 10 items per page
+                        </label>
+                        <label class="btn btn-secondary">
+                            <input type="radio" name="pageSixe" onclick="pageSize = 20; UpdateSongPage()" autocomplete="off"> 20 items per page
+                          </label>
+                        <label class="btn btn-secondary">
+                          <input type="radio" name="pageSixe" onclick="pageSize = 50; UpdateSongPage()" autocomplete="off"> 50 items per page
+                        </label>
+                      </div>
+                </div>
+                <div class="row">
                     <div id="songList" class="col">
                         <p>loading</p>
                     </div>

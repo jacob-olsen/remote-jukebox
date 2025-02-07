@@ -1,4 +1,4 @@
-var pageSize = 10
+var pageSize = 5
 var pageCount = 0
 var songCount = 0
 var tagetUrl = "/api/songs"
@@ -21,6 +21,7 @@ function UpdateSongPage(){
         } else {
             data = JSON.parse(mgs)
         }
+        songCount = data["count"]
         list = document.getElementById("songList")
         list.innerHTML = ""
 
@@ -29,7 +30,7 @@ function UpdateSongPage(){
         pageTurn += '</div>'
         if (pageCount > 0){
             pageTurn += '<div class="col-1">'
-            pageTurn += '<button>back</button>'
+            pageTurn += '<button onclick="pageCount -= 1; UpdateSongPage()">back</button>'
             pageTurn += '</div>'
         }
         pageTurn += '<div class="col-auto">'
@@ -37,7 +38,7 @@ function UpdateSongPage(){
         pageTurn += '</div>'
         if (pageCount < Math.round(songCount/pageSize)){
             pageTurn += '<div class="col-1">'
-            pageTurn += '<button>next</button>'
+            pageTurn += '<button onclick="pageCount += 1; UpdateSongPage()">next</button>'
             pageTurn += '</div>'
         }
         pageTurn += '<div class="col">'
@@ -46,7 +47,7 @@ function UpdateSongPage(){
 
         list.innerHTML += pageTurn
         
-        data.forEach(element => {
+        data["songs"].forEach(element => {
             htmlInfo = '<div class="row" id="' + element["ID"] +'">'
             htmlInfo += '<p>'+element["name"]+'</p>'
             htmlInfo += '<button onclick="addToList(' + element["ID"] + ')">add to list</button>'
