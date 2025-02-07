@@ -53,6 +53,10 @@ class Manger:
         self.__updateUi()
     def getSongList(self):
         return self.__playList
+    def jumpToSong(self, ID):
+        self.__playListPos = self.__playList.index(ID)
+        self.setSong(self.__playList[self.__playListPos])
+
     
     def getPlayList(self):
         data = []

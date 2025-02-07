@@ -75,8 +75,11 @@ def addSongToList(data):
     manger.rmSongfromList(data["songID"])
 @socketio.on('songMoveList')
 def songMoveList(data):
-    print(data)
     manger.songMoveList(int(data["songID"]),int(data["move"]))
+@socketio.on('jumpToSong')
+def jumpToSong(data):
+    print(data)
+    manger.jumpToSong(int(data["songID"]))
 
 @socketio.on('forWard')
 def skipTime(data):

@@ -49,6 +49,10 @@ function forWard(time){
 function jumpTo(){
     socket.emit("setTime", { time: document.getElementById("posBar").value})
 }
+function jumpToSong(ID){
+    socket.emit("jumpToSong", { songID: ID})
+
+}
 //ui Update
 function playButon(state) {
     if (uiData["playing"] != state) {
@@ -72,7 +76,13 @@ function updatePlayList(playList){
         htmlInfo += '<div class="col">'
         htmlInfo += '<p>'+element["name"]+'</p>'
         if (element["ID"] == playList["plaingID"]){
-            htmlInfo += '<p>plaing</p>'
+            htmlInfo += '<div class="row">'
+            htmlInfo += '<button onclick="jumpToSong(' + element["ID"] + ')" class="bg-success">plaing</button>'
+            htmlInfo += '</div>'
+        }else{
+            htmlInfo += '<div class="row">'
+            htmlInfo += '<button onclick="jumpToSong(' + element["ID"] + ')">play</button>'
+            htmlInfo += '</div>'
         }
         htmlInfo += '</div>'
         htmlInfo += '<div class="col-auto">'
