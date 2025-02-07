@@ -89,7 +89,21 @@ class Manger:
         self.__player.set(int(data["length"]*(time/100)))
         self.__updateUi()
 
+    def skipBackward(self):
+        time = self.playTime()
+        if time["play_time"] < 10000:
+            self.__playListPos -= 1
+            if self.__playListPos < 0:
+                self.__playListPos = len(self.__playList) -1
+            self.setSong(self.__playList[self.__playListPos])
+        else:
+            self.setTime(0)
 
+    def skipForward(self):
+        self.__playListPos += 1
+        if self.__playListPos >= len(self.__playList):
+            self.__playListPos = 0
+        self.setSong(self.__playList[self.__playListPos])
 
     def addUiUpdateList(self, func):
         self.__uiUpdateList.append(func)
@@ -102,6 +116,7 @@ class Manger:
         data = self.__player.status()
         data["playList"] = {}
         data["playList"]["list"] = self.getPlayList()
+        data["loop"] = self.__loop
         if len(self.__playList) > self.__playListPos:
             data["playList"]["plaingID"] = self.__playList[self.__playListPos]
         else:

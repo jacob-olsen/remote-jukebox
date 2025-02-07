@@ -46,6 +46,12 @@ function requstPos() {
 function forWard(time){
     socket.emit("forWard", { time: time })
 }
+function skipForward(){
+    socket.emit("skipForward", {})
+}
+function skipBackward(){
+    socket.emit("skipBackward", {})
+}
 function jumpTo(){
     socket.emit("setTime", { time: document.getElementById("posBar").value})
 }
@@ -127,4 +133,8 @@ function updateTime(plaing,total){
     if (totalSec < 10)
         totalSec = "0" + totalSec
     document.getElementById("timeText").innerHTML = nowMin + ":" + nowSec + "-" + totalMin + ":" + totalSec
+}
+
+function updateLoopButten(ver){
+
 }

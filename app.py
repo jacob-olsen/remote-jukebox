@@ -66,6 +66,12 @@ def sockePlay(data):
     else:
         print("pause")
         manger.pause()
+@socketio.on('skipBackward')
+def skipBackward(data):
+    manger.skipBackward()
+@socketio.on('skipForward')
+def skipForward(data):
+    manger.skipForward()
 
 @socketio.on('addSongToList')
 def addSongToList(data):

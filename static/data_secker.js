@@ -36,7 +36,7 @@ function UpdateSongPage(){
         pageTurn += '<div class="col-auto">'
         pageTurn += '<p>' + pageCount + '</p>'
         pageTurn += '</div>'
-        if (pageCount < Math.round(songCount/pageSize)){
+        if (pageCount < Math.ceil(songCount/pageSize)-1){
             pageTurn += '<div class="col-1">'
             pageTurn += '<button onclick="pageCount += 1; UpdateSongPage()">next</button>'
             pageTurn += '</div>'

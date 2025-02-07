@@ -17,13 +17,15 @@
                     <div class="col">
                         <div class="row">
                             <div class="col">
+                                <button onclick='skipBackward()'>|<</button>
                                 <button onclick='forWard(-30)'><<</button>
-                            </div>
-                            <div class="col">
                                 <button id="playButten" onclick='play(!uiData["playing"])'>></button>
-                            </div>
-                            <div class="col">
                                 <button onclick='forWard(30)'>>></button>
+                                <button onclick='skipForward()'>>|</button>
+                            </div>
+                            <div class="col-1"></div>
+                            <div class="col-1">
+                                <button id="loopButton">loop</button>
                             </div>
                         </div>
                         <div class="row">
