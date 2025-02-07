@@ -38,7 +38,9 @@ class Player:
     def pause(self):
         self.__player.pause()
         self.__status_event_triger()
-
+    def stop(self):
+        self.__player.stop()
+        self.__status_event_triger()
     def skip(self, offset):
         pos = self.__player.get_time() + offset
         legth = self.__player.get_length()

@@ -163,7 +163,8 @@ class Manger:
                 print("song done")
                 if self.__loop == 2:
                     print("replaing")
-                    self.__player.set(0)
+                    print(self.status())
+                    self.__player.stop()
                     self.__player.play()
                 else:
                     if self.__playListPos < len(self.__playList)-1:
